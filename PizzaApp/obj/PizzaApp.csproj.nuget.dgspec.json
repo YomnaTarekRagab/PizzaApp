@@ -1,6 +1,7 @@
 {
   "format": 1,
   "restore": {
+<<<<<<< HEAD
     "C:\\Users\\dell\\Desktop\\Docs\\PizzaApp\\PizzaApp\\PizzaApp.csproj": {}
   },
   "projects": {
@@ -12,9 +13,22 @@
         "projectPath": "C:\\Users\\dell\\Desktop\\Docs\\PizzaApp\\PizzaApp\\PizzaApp.csproj",
         "packagesPath": "C:\\Users\\dell\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\dell\\Desktop\\Docs\\PizzaApp\\PizzaApp\\obj\\",
+=======
+    "C:\\Users\\manar\\OneDrive\\Desktop\\PizzaApp\\PizzaApp\\PizzaApp.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\manar\\OneDrive\\Desktop\\PizzaApp\\PizzaApp\\PizzaApp.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\manar\\OneDrive\\Desktop\\PizzaApp\\PizzaApp\\PizzaApp.csproj",
+        "projectName": "PizzaApp",
+        "projectPath": "C:\\Users\\manar\\OneDrive\\Desktop\\PizzaApp\\PizzaApp\\PizzaApp.csproj",
+        "packagesPath": "C:\\Users\\manar\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\manar\\OneDrive\\Desktop\\PizzaApp\\PizzaApp\\obj\\",
+>>>>>>> 93360b4e00d69fdac359c40182fc0b9fd4df8dcc
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\dell\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\manar\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -64,7 +78,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100-preview.6.21359.2\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100-preview.6.21355.2\\RuntimeIdentifierGraph.json"
         }
       }
     }
