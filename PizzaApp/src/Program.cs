@@ -44,8 +44,8 @@ public class PizzaModel
             // Deserialize the jsonString to print it on the console
 
             var pizzaMenu = JsonConvert.DeserializeObject<PizzaModel>(jsonString);
-            // AnsiConsole.Render(new Markup("[bold yellow] Enter the number of pizza orders:[/] \n"));
-            // int n = Convert.ToInt32(Console.ReadLine());
+            AnsiConsole.Render(new Markup("[bold yellow] Enter the number of pizza orders:[/] \n"));
+            int n = Convert.ToInt32(Console.ReadLine());
             int i = 0;
             Random rnd = new Random();
             int RandId = rnd.Next(1000);
@@ -54,8 +54,8 @@ public class PizzaModel
             string prefSize = "";
             string prefSide = "";
             var prefOrder = new Order();
-            bool morePizza = true;
-            while (morePizza)
+            //bool morePizza = true;
+            while (i<n)
             {
                 // Allow the user to place his order and checks if the entered option is from the available options or not
                 // Doesn't proceed if the user entered nothing or entered an option not in the lists
@@ -148,13 +148,14 @@ public class PizzaModel
                         checkSize = true;
                     }
                 }
-                i++;
+               
                 prefOrder.ChosenTop = prefTop;
                 prefOrder.ChosenSize = prefSize;
                 prefOrder.ChosenSide = prefSide;
                 prefOrder.UserId = RandId;
-                prefOrder.NumOfPizzas = i;
+                prefOrder.NumOfPizzas = n;
                 prefOrder.TotalPrice = SumOfPrices;
+                i++;
                 File.AppendAllText(ordersPath, JsonConvert.SerializeObject(prefOrder) + Environment.NewLine);
                 // serialize JSON directly to a file
                 //  using (StreamWriter file = new(ordersPath, append: true))
@@ -162,23 +163,23 @@ public class PizzaModel
                 //  JsonSerializer serializer = new JsonSerializer();
                 //  serializer.Serialize(file, prefOrder);
                 //  }
-                var answer = AnsiConsole.Prompt(
-                    new SelectionPrompt<string>()
-                        .Title("Do you want to order another [green] pizza[/]?")
-                        .AddChoices(new[] { "Yes", "No" })
-                        );
-                if (answer == "Yes")
-                {
-                    morePizza = true;
+                // var answer = AnsiConsole.Prompt(
+                //     new SelectionPrompt<string>()
+                //         .Title("Do you want to order another [green] pizza[/]?")
+                //         .AddChoices(new[] { "Yes", "No" })
+                //         );
+                // if (answer == "Yes")
+                // {
+                //     morePizza = true;
 
-                }
-                else
-                {
-                    morePizza = false;
-                    AnsiConsole.Render(new Markup($"[bold blue]Come Back again![/]\n"));
+                // }
+                // else
+                // {
+                //     morePizza = false;
+                //     AnsiConsole.Render(new Markup($"[bold blue]Come Back again![/]\n"));
 
 
-                }
+                // }
             }
             // Console.WriteLine("Your order has been completed!");
             // Sets the user's preferences as a PizzaModel object and serializes it into JSON to be printed in JSON format 
