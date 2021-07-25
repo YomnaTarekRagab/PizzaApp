@@ -1,0 +1,36 @@
+{
+    "Toppings":
+    [
+        "Chicken BBQ",
+        "Shrimps",
+        "Pepperoni",
+        "Vegetables",
+        "Meat"
+
+    ],
+    "Sizes":
+    [
+       {
+           "Type":"Small",
+           "Price":10
+       } ,
+       {
+        "Type":"Medium",
+        "Price":15
+    } , {
+        "Type":"Large",
+        "Price":20
+    } 
+    ]
+            
+    ,
+    "Sides":
+    [
+        "Fries",
+        "Salad",
+        "Cookie",
+        "Garlic Bread"
+    ]
+
+      
+  }
