@@ -6,8 +6,7 @@ using Spectre.Console;
 
 namespace PizzaApp
 {
-    // Class of pizzaModel to be able to get the options available and set the user's order
-    public class PizzaModel
+public class PizzaModel
     {
         public string[] Toppings { get; set; }
         public PSizes[] Sizes { get; set; }
@@ -32,11 +31,15 @@ namespace PizzaApp
     {
         static void Main(string[] args)
         {
+            string fileName = "PizzaMenu.json";
+            string path = Path.Combine(Environment.CurrentDirectory, @"Data\", fileName);
+            path = path.Split("PizzaApp\\")[0] + "PizzaApp\\";
+            string ordersPath = path + "Orders.json";
+            File.Delete(ordersPath);
             AnsiConsole.Render(
             new FigletText("PIZZA MENU")
             .Centered()
             .Color(Color.Yellow));
-            string fileName = "PizzaMenu.json";
             string jsonString = File.ReadAllText(fileName);
             // Deserialize the jsonString to print it on the console
 
@@ -52,10 +55,10 @@ namespace PizzaApp
             string prefSide = "";
             var prefOrder = new Order();
             bool morePizza = true;
-            // Allow the user to place his order and checks if the entered option is from the available options or not
-            // Doesn't proceed if the user entered nothing or entered an option not in the lists
             while (morePizza)
             {
+                // Allow the user to place his order and checks if the entered option is from the available options or not
+                // Doesn't proceed if the user entered nothing or entered an option not in the lists
                 AnsiConsole.Render(new Markup("[bold green]Available toppings[/] \n"));
                 var table = new Table();
                 table.AddColumn(new TableColumn("Toppings").Centered());
@@ -87,7 +90,6 @@ namespace PizzaApp
                 var table1 = new Table();
                 table1.AddColumn(new TableColumn("Sizes").Centered());
                 table1.AddColumn(new TableColumn("Prices").Centered());
-
                 foreach (
                 var item in pizzaMenu.Sizes)
                 {
@@ -146,53 +148,25 @@ namespace PizzaApp
                         checkSize = true;
                     }
                 }
-                 i++;
+                i++;
                 prefOrder.ChosenTop = prefTop;
                 prefOrder.ChosenSize = prefSize;
                 prefOrder.ChosenSide = prefSide;
                 prefOrder.UserId = RandId;
                 prefOrder.NumOfPizzas = i;
                 prefOrder.TotalPrice = SumOfPrices;
-                File.WriteAllText(@"C:\Users\dell\Desktop\PizzaApp\Orders.json", JsonConvert.SerializeObject(prefOrder));
-
+                File.AppendAllText(ordersPath, JsonConvert.SerializeObject(prefOrder) + Environment.NewLine);
                 // serialize JSON directly to a file
-                using (StreamWriter file = File.CreateText(@"C:\\Users\dell\Desktop\PizzaApp\Orders.json"))
-                {
-                    JsonSerializer serializer = new JsonSerializer();
-                    serializer.Serialize(file, prefOrder);
-                }
-                Console.WriteLine("Your order has been completed!");
-
-                // Sets the user's preferences as a PizzaModel object and serializes it into JSON to be printed in JSON format 
-
-                // var OrderTable = new Table();
-                // OrderTable.AddColumn("[bold purple] UserId[/]");
-                // OrderTable.AddColumn("[bold purple]Number of Pizzas[/]");
-                // OrderTable.AddColumn("[bold purple]Total Order Price[/]");
-                // OrderTable.AddRow($"{prefOrder.UserId}", $"{prefOrder.NumOfPizzas}", $"{prefOrder.TotalPrice}");
-                // AnsiConsole.Render(OrderTable);
-
-
-                // string jsonOrder = JsonSerializer.Serialize(prefOrder);
-                // string jsonOrder2 = JsonSerializer.Serialize(orderArray);
-                // Console.WriteLine(jsonOrder);
-                // Console.WriteLine(jsonOrder2);
-                // Console.WriteLine("Do you want to order another pizza? (yes/no)");
-                // string answer= Console.ReadLine();
-                // if(answer=="yes")
-                // {
-                //     morePizza=true;
-                // }
-                // else {
-                //     morePizza=false;
-                //     Console.WriteLine("Come back again!");
-                // }
-
+                //  using (StreamWriter file = new(ordersPath, append: true))
+                //  {
+                //  JsonSerializer serializer = new JsonSerializer();
+                //  serializer.Serialize(file, prefOrder);
+                //  }
                 var answer = AnsiConsole.Prompt(
-        new SelectionPrompt<string>()
-            .Title("Do you want to order another [green] pizza[/]?")
-            .AddChoices(new[] { "Yes","No" })
-            );
+                    new SelectionPrompt<string>()
+                        .Title("Do you want to order another [green] pizza[/]?")
+                        .AddChoices(new[] { "Yes", "No" })
+                        );
                 if (answer == "Yes")
                 {
                     morePizza = true;
@@ -206,7 +180,33 @@ namespace PizzaApp
 
                 }
             }
-        }
+            // Console.WriteLine("Your order has been completed!");
+            // Sets the user's preferences as a PizzaModel object and serializes it into JSON to be printed in JSON format 
 
+
+            var OrderTable = new Table();
+            OrderTable.AddColumn("[bold purple] UserId[/]");
+            OrderTable.AddColumn("[bold purple]Number of Pizzas[/]");
+            OrderTable.AddColumn("[bold purple]Total Order Price[/]");
+            OrderTable.AddRow($"{prefOrder.UserId}", $"{prefOrder.NumOfPizzas}", $"{prefOrder.TotalPrice}");
+            AnsiConsole.Render(OrderTable);
+
+
+            // string jsonOrder = JsonSerializer.Serialize(prefOrder);
+            // string jsonOrder2 = JsonSerializer.Serialize(orderArray);
+            // Console.WriteLine(jsonOrder);
+            // Console.WriteLine(jsonOrder2);
+            // Console.WriteLine("Do you want to order another pizza? (yes/no)");
+            // string answer= Console.ReadLine();
+            // if(answer=="yes")
+            // {
+            //     morePizza=true;
+            // }
+            // else {
+            //     morePizza=false;
+            //     Console.WriteLine("Come back again!");
+            // }
+
+        }
     }
 }
