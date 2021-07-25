@@ -99,27 +99,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\manar\\.nuget\\packages\\": {}
+    "C:\\Users\\dell\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-<<<<<<< HEAD
       "projectUniqueName": "C:\\Users\\dell\\Desktop\\Docs\\PizzaApp\\PizzaApp\\PizzaApp.csproj",
       "projectName": "PizzaApp",
       "projectPath": "C:\\Users\\dell\\Desktop\\Docs\\PizzaApp\\PizzaApp\\PizzaApp.csproj",
       "packagesPath": "C:\\Users\\dell\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\dell\\Desktop\\Docs\\PizzaApp\\PizzaApp\\obj\\",
-=======
-      "projectUniqueName": "C:\\Users\\manar\\OneDrive\\Desktop\\PizzaApp\\PizzaApp\\PizzaApp.csproj",
-      "projectName": "PizzaApp",
-      "projectPath": "C:\\Users\\manar\\OneDrive\\Desktop\\PizzaApp\\PizzaApp\\PizzaApp.csproj",
-      "packagesPath": "C:\\Users\\manar\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\manar\\OneDrive\\Desktop\\PizzaApp\\PizzaApp\\obj\\",
->>>>>>> 93360b4e00d69fdac359c40182fc0b9fd4df8dcc
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\manar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\dell\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -169,8 +161,16 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100-preview.6.21355.2\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100-preview.6.21359.2\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\dell\\Desktop\\Docs\\PizzaApp\\PizzaApp\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }
