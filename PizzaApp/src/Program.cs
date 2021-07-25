@@ -29,11 +29,15 @@ class Program
 {
 static void Main(string[] args)
 {
+string fileName = "PizzaMenu.json";
+string path = Path.Combine(Environment.CurrentDirectory, @"Data\", fileName);
+path = path.Split("PizzaApp\\")[0]+"PizzaApp\\";
+string ordersPath = path+"Orders.json";
+File.Delete(ordersPath);
 AnsiConsole.Render(
 new FigletText("PIZZA MENU")
 .Centered()
 .Color(Color.Yellow));
-string fileName = "PizzaMenu.json";
 string jsonString = File.ReadAllText(fileName);
 // Deserialize the jsonString to print it on the console
 
@@ -83,7 +87,6 @@ AnsiConsole.Render(new Markup("[bold green]Available sizes[/] \n"));
 var table1 = new Table();
 table1.AddColumn(new TableColumn("Sizes").Centered());
 table1.AddColumn(new TableColumn("Prices").Centered());
-
 foreach (
 var item in pizzaMenu.Sizes)
 {
@@ -149,18 +152,16 @@ prefOrder.UserId=RandId;
 prefOrder.NumOfPizzas=n;
 prefOrder.TotalPrice=SumOfPrices;
 i++;
-File.WriteAllText(@"C:\Users\dell\Desktop\PizzaApp\Orders.json", JsonConvert.SerializeObject(prefOrder));
-
+File.AppendAllText(ordersPath, JsonConvert.SerializeObject(prefOrder) + Environment.NewLine);
 // serialize JSON directly to a file
-using (StreamWriter file = File.CreateText(@"C:\\Users\dell\Desktop\PizzaApp\Orders.json"))
-{
-JsonSerializer serializer = new JsonSerializer();
-serializer.Serialize(file, prefOrder);
-}
+//  using (StreamWriter file = new(ordersPath, append: true))
+//  {
+//  JsonSerializer serializer = new JsonSerializer();
+//  serializer.Serialize(file, prefOrder);
+//  }
 
 }
 Console.WriteLine("Your order has been completed!");
-
 // Sets the user's preferences as a PizzaModel object and serializes it into JSON to be printed in JSON format 
 
 
