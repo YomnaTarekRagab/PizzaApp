@@ -1,0 +1,10 @@
+
+*.dll
+PizzaApp/bin/Debug/net6.0/PizzaApp.dll
+PizzaApp/obj/PizzaApp.csproj.nuget.g.props
+PizzaApp/obj/project.assets.json
+PizzaApp/obj/PizzaApp.csproj.nuget.dgspec.json
+PizzaApp/obj/Debug/net6.0/PizzaApp.genruntimeconfig.cache
+PizzaApp/obj/Debug/net6.0/PizzaApp.csproj.CoreCompileInputs.cache
+PizzaApp/obj/Debug/net6.0/PizzaApp.csproj.AssemblyReference.cache
+PizzaApp/obj/Debug/net6.0/PizzaApp.assets.cache

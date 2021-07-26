@@ -6,8 +6,8 @@ namespace PizzaApp{
         private static int currentId=1;
         public int NumOfPizzas{get; set;}
         public int userId;
-        private List<Pizza> listOfPizzas;
-        private float totalPrice;
+        public List<Pizza> listOfPizzas;
+        public float totalPrice;
         //--Methods
         public Order(){
             userId = currentId;

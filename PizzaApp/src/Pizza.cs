@@ -2,9 +2,9 @@ using System.Collections.Generic;
 namespace PizzaApp
 {
     public class Pizza{
-        private typeXPrice topping;
-        private typeXPrice size;
-        private typeXPrice side;
+        public typeXPrice topping;
+        public typeXPrice size;
+        public typeXPrice side;
         private float price=0;
         public static PizzaModel pizzaMenu;
         //--Methods
