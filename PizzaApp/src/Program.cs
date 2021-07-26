@@ -6,207 +6,106 @@ using Spectre.Console;
 
 namespace PizzaApp
 {
-    // Class of pizzaModel to be able to get the options available and set the user's order
-    public class PizzaModel
-    {
-        public string[] Toppings { get; set; }
-        public PSizes[] Sizes { get; set; }
-        public string[] Sides { get; set; }
-    }
-    public record PSizes(string Type, int Price);
-
-    public class Order
-    {
-        public int UserId { get; set; }
-        public string ChosenTop { get; set; }
-        public string ChosenSize { get; set; }
-        public string ChosenSide { get; set; }
-        public int NumOfPizzas { get; set; }
-        public int TotalPrice { get; set; }
-        public Order()
-        {
-
-        }
-    }
     class Program
     {
         static void Main(string[] args)
         {
+            //--Begin
             AnsiConsole.Render(
-            new FigletText("PIZZA MENU")
-            .Centered()
-            .Color(Color.Yellow));
+                new FigletText("PIZZA MENU")
+                .Centered()
+                .Color(Color.Yellow));
+            bool progStart = true;
+            //Generic file path
             string fileName = "PizzaMenu.json";
-            string jsonString = File.ReadAllText(fileName);
-            // Deserialize the jsonString to print it on the console
-
-            var pizzaMenu = JsonConvert.DeserializeObject<PizzaModel>(jsonString);
-            // AnsiConsole.Render(new Markup("[bold yellow] Enter the number of pizza orders:[/] \n"));
-            // int n = Convert.ToInt32(Console.ReadLine());
-            int i = 0;
-            Random rnd = new Random();
-            int RandId = rnd.Next(1000);
-            int SumOfPrices = 0;
-            string prefTop = "";
-            string prefSize = "";
-            string prefSide = "";
-            var prefOrder = new Order();
-            bool morePizza = true;
-            // Allow the user to place his order and checks if the entered option is from the available options or not
-            // Doesn't proceed if the user entered nothing or entered an option not in the lists
-            while (morePizza)
+            string path = Path.Combine(Environment.CurrentDirectory, @"Data\", fileName);
+            path = path.Split("PizzaApp\\")[0] + "PizzaApp\\";
+            String ordersPath = path + "Orders.json";
+            //Delete previously created fle
+            File.Delete(ordersPath);
+            while (progStart)
             {
-                AnsiConsole.Render(new Markup("[bold green]Available toppings[/] \n"));
-                var table = new Table();
-                table.AddColumn(new TableColumn("Toppings").Centered());
-                foreach (
-                string item in pizzaMenu.Toppings)
+                bool currCustomer = true;
+                while (currCustomer)
                 {
-
-                    table.AddRow($"[bold Red]{item}[/]");
-
-                }
-                AnsiConsole.Render(table);
-                AnsiConsole.Render(new Markup("[bold yellow] Your preferred topping from the topping list:[/] \n"));
-                bool checkTop = false;
-
-                while (!checkTop)
-                {
-                    prefTop = Console.ReadLine();
-                    foreach (string item in pizzaMenu.Toppings)
+                    AnsiConsole.Render(new Markup("[bold yellow] Welcome! Start placing your order below...[/]\n"));
+                    AnsiConsole.Render(new Markup("[bold yellow] Enter the number of pizzas:[/] \n"));
+                    Int32.TryParse(Console.ReadLine(), out int n);
+                    //--Reading JSON from file
+                    PizzaModel pizzaMenu = DeserializeFile(fileName);
+                    //
+                    int i = 0;
+                    float totalOrderPrice = 0f;
+                    Pizza.pizzaMenu = pizzaMenu;
+                    Order prefOrder = new Order();
+                    //setting num of pizzas
+                    prefOrder.NumOfPizzas = n;
+                    prefOrder.listOfPizzas = new List<Pizza>();
+                    while (i < n)
                     {
-                        if (prefTop == item)
-                        {
-                            AnsiConsole.Render(new Markup($"[bold blue] Chosen Topping is: {prefTop}[/]\n"));
-                            checkTop = true;
-                        }
-
+                        AnsiConsole.Render(new Markup($"[bold red]This is order number {i} from your {n} orders:[/] \n"));
+                        //
+                        typeXPrice prefTop = null, prefSize = null, prefSide = null;
+                        ConsoleFn(pizzaMenu, ref prefTop, ref prefSize, ref prefSide);
+                        //--Create a pizza Object
+                        Pizza p1 = new Pizza(prefTop, prefSize, prefSide);
+                        prefOrder.listOfPizzas.Add(p1);
+                        i++;
+                        //
+                        if (i == n)
+                            totalOrderPrice = prefOrder.OrderPrice();
                     }
-                }
-                AnsiConsole.Render(new Markup("[bold green]Available sizes[/] \n"));
-                var table1 = new Table();
-                table1.AddColumn(new TableColumn("Sizes").Centered());
-                table1.AddColumn(new TableColumn("Prices").Centered());
-
-                foreach (
-                var item in pizzaMenu.Sizes)
-                {
-                    table1.AddRow(new Markup($"[bold Red]{item.Type}[/]"), new Markup($"[bold Red] ${item.Price}[/]"));
-                }
-                AnsiConsole.Render(table1);
-                AnsiConsole.Render(new Markup("[bold yellow]Your preferred pizza size from the sizes list:[/]\n"));
-                bool checkSize = false;
-
-                while (!checkSize)
-                {
-                    prefSize = Console.ReadLine();
-                    foreach (var item in pizzaMenu.Sizes)
-                    {
-                        if (prefSize == item.Type)
-                        {
-                            AnsiConsole.Render(new Markup($"[bold blue]Chosen Size is: {prefSize}[/]\n"));
-                            checkSize = true;
-                        }
-
-                    }
-                }
-                AnsiConsole.Render(new Markup("[bold green]Available sides[/] \n"));
-                var table2 = new Table();
-                table2.AddColumn(new TableColumn("Sides").Centered());
-                foreach (
-                string item in pizzaMenu.Sides)
-                {
-                    table2.AddRow($"[bold Red]{item}[/]");
-
-                }
-                AnsiConsole.Render(table2);
-                AnsiConsole.Render(new Markup("[bold yellow]Your preferred side from the sides list:[/]\n"));
-                bool checkSide = false;
-
-                while (!checkSide)
-                {
-                    prefSide = Console.ReadLine();
-                    foreach (string item in pizzaMenu.Sides)
-                    {
-                        if (prefSide == item)
-                        {
-                            AnsiConsole.Render(new Markup($"[bold blue]Chosen Side is: {prefSide}[/]\n"));
-                            checkSide = true;
-                        }
-
-                    }
-                }
-
-                foreach (var item in pizzaMenu.Sizes)
-                {
-                    if (prefSize == item.Type)
-                    {
-                        SumOfPrices += item.Price;
-                        AnsiConsole.Render(new Markup($"[bold blue]Price for this order is: {item.Price}[/]\n"));
-                        checkSize = true;
-                    }
-                }
-                 i++;
-                prefOrder.ChosenTop = prefTop;
-                prefOrder.ChosenSize = prefSize;
-                prefOrder.ChosenSide = prefSide;
-                prefOrder.UserId = RandId;
-                prefOrder.NumOfPizzas = i;
-                prefOrder.TotalPrice = SumOfPrices;
-                File.WriteAllText(@"C:\Users\dell\Desktop\PizzaApp\Orders.json", JsonConvert.SerializeObject(prefOrder));
-
-                // serialize JSON directly to a file
-                using (StreamWriter file = File.CreateText(@"C:\\Users\dell\Desktop\PizzaApp\Orders.json"))
-                {
-                    JsonSerializer serializer = new JsonSerializer();
-                    serializer.Serialize(file, prefOrder);
-                }
-                Console.WriteLine("Your order has been completed!");
-
-                // Sets the user's preferences as a PizzaModel object and serializes it into JSON to be printed in JSON format 
-
-                // var OrderTable = new Table();
-                // OrderTable.AddColumn("[bold purple] UserId[/]");
-                // OrderTable.AddColumn("[bold purple]Number of Pizzas[/]");
-                // OrderTable.AddColumn("[bold purple]Total Order Price[/]");
-                // OrderTable.AddRow($"{prefOrder.UserId}", $"{prefOrder.NumOfPizzas}", $"{prefOrder.TotalPrice}");
-                // AnsiConsole.Render(OrderTable);
-
-
-                // string jsonOrder = JsonSerializer.Serialize(prefOrder);
-                // string jsonOrder2 = JsonSerializer.Serialize(orderArray);
-                // Console.WriteLine(jsonOrder);
-                // Console.WriteLine(jsonOrder2);
-                // Console.WriteLine("Do you want to order another pizza? (yes/no)");
-                // string answer= Console.ReadLine();
-                // if(answer=="yes")
-                // {
-                //     morePizza=true;
-                // }
-                // else {
-                //     morePizza=false;
-                //     Console.WriteLine("Come back again!");
-                // }
-
-                var answer = AnsiConsole.Prompt(
-        new SelectionPrompt<string>()
-            .Title("Do you want to order another [green] pizza[/]?")
-            .AddChoices(new[] { "Yes","No" })
-            );
-                if (answer == "Yes")
-                {
-                    morePizza = true;
-
-                }
-                else
-                {
-                    morePizza = false;
-                    AnsiConsole.Render(new Markup($"[bold blue]Come Back again![/]\n"));
-
-
+                    // serialize JSON directly to a file
+                    JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto };
+                    string json = JsonConvert.SerializeObject(prefOrder, settings);
+                    File.AppendAllText(ordersPath, json + Environment.NewLine);
+                    //Customer order finished
+                    Console.WriteLine("Your order has been completed!");
+                    System.Console.WriteLine("The total order price is {0}", totalOrderPrice);
+                    //End of loop
+                    currCustomer = false;
                 }
             }
-        }
 
+            static PizzaModel DeserializeFile(string fileName)
+            {
+                string jsonString = File.ReadAllText(fileName);
+                //--Deserialize the jsonString to print it on the console
+                var pizzaMenu = JsonConvert.DeserializeObject<PizzaModel>(jsonString);
+                return pizzaMenu;
+            }
+
+            static void ConsoleFn(PizzaModel pizzaMenu, ref typeXPrice prefTop, ref typeXPrice prefSize, ref typeXPrice prefSide)
+            {
+                //--Table formatting
+                string formatTitle = "[bold green]Available toppings[/] \n";
+                List<String> columnNames = new List<string> { "Toppings", "Prices" };
+                Menu.PrintMenu(formatTitle, columnNames, pizzaMenu.Toppings);
+                //
+                AnsiConsole.Render(new Markup("[bold yellow] Your preferred topping from the topping list:[/] \n"));
+                //--Customer's Toppings
+                prefTop = Menu.InputCheck(pizzaMenu.Toppings, "topping");
+                //--Table formatting
+                formatTitle = "[bold green]Available sizes[/] \n";
+                columnNames.Clear();
+                columnNames.Add("Sizes");
+                columnNames.Add("Prices");
+                Menu.PrintMenu(formatTitle, columnNames, pizzaMenu.Sizes);
+                //
+                AnsiConsole.Render(new Markup("[bold yellow]Your preferred pizza size from the sizes list:[/]\n"));
+                //--Customer's Chosen Size
+                prefSize = Menu.InputCheck(pizzaMenu.Sizes);
+                //--Table formatting
+                formatTitle = "[bold green]Available sides[/] \n";
+                columnNames.Clear();
+                columnNames.Add("Sides");
+                columnNames.Add("Prices");
+                Menu.PrintMenu(formatTitle, columnNames, pizzaMenu.Sides);
+                //
+                AnsiConsole.Render(new Markup("[bold yellow]Your preferred side from the sides list:[/]\n"));
+                //--Customer's Chosen Sides
+                prefSide = Menu.InputCheck(pizzaMenu.Sides, "side");
+            }
+        }
     }
 }
