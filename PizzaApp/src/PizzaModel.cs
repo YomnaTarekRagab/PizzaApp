@@ -2,10 +2,10 @@ using System.Collections.Generic;
 namespace PizzaApp
 {
     public class PizzaModel{
-    public List <string> Toppings { get; set; }
-    public List<PSizes> Sizes { get; set; }
-    public  List<string> Sides { get; set; }
+    public List <typeXPrice> Toppings { get; set; }
+    public List<typeXPrice> Sizes { get; set; }
+    public  List<typeXPrice> Sides { get; set; }
     }
-    public record PSizes(string Type, float Price);
+    public record typeXPrice(string Type, float Price);
         
 }
