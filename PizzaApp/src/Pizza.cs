@@ -2,21 +2,18 @@ using System.Collections.Generic;
 namespace PizzaApp
 {
     public class Pizza{
-        public typeXPrice topping;
-        public typeXPrice size;
-        public typeXPrice side;
-        private float price=0;
-        public static PizzaModel pizzaMenu;
-        //--Methods
+        private float price = 0;
+        public typeXPrice Topping { get; set; }
+        public typeXPrice Size { get; set; }
+        public typeXPrice Side { get; set; }
         public Pizza(typeXPrice top, typeXPrice size, typeXPrice side){
-            this.topping =top;
-            this.size=size;
-            this.side=side;
+            this.Topping = top;
+            this.Size = size;
+            this.Side = side;
         }
-        //
         public float CalculatePrice(){
             if(this.price==0)
-                this.price+=this.topping.Price+this.size.Price+this.side.Price;
+                this.price+=this.Topping.price+this.Size.price+this.Side.price;
             return this.price;
         }
 

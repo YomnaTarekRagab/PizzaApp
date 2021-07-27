@@ -8,7 +8,7 @@ namespace PizzaApp
 {
     class Program
     {
-        static void Main(string[] args)
+          static void Main(string[] args)
         {
             //--Begin
             AnsiConsole.Render(
@@ -16,12 +16,12 @@ namespace PizzaApp
                 .Centered()
                 .Color(Color.Yellow));
             bool progStart = true;
-            //Generic file path
+            //--Generic file path
             string fileName = "PizzaMenu.json";
             string path = Path.Combine(Environment.CurrentDirectory, @"Data\", fileName);
             path = path.Split("PizzaApp\\")[0] + "PizzaApp\\";
             String ordersPath = path + "Orders.json";
-            //Delete previously created fle
+            //--Delete previously created fle
             File.Delete(ordersPath);
             while (progStart)
             {
@@ -33,55 +33,48 @@ namespace PizzaApp
                     Int32.TryParse(Console.ReadLine(), out int n);
                     //--Reading JSON from file
                     PizzaModel pizzaMenu = DeserializeFile(fileName);
-                    //
                     int i = 0;
                     float totalOrderPrice = 0f;
-                    Pizza.pizzaMenu = pizzaMenu;
+
                     Order prefOrder = new Order();
-                    //setting num of pizzas
+                    //--Setting num of pizzas
                     prefOrder.NumOfPizzas = n;
-                    prefOrder.listOfPizzas = new List<Pizza>();
-                    while (i < n)
+                    prefOrder.ListOfPizzas = new List<Pizza>();
+                    while (i<n)
                     {
                         AnsiConsole.Render(new Markup($"[bold red]This is order number {i} from your {n} orders:[/] \n"));
-                        //
                         typeXPrice prefTop = null, prefSize = null, prefSide = null;
                         ConsoleFn(pizzaMenu, ref prefTop, ref prefSize, ref prefSide);
                         //--Create a pizza Object
                         Pizza p1 = new Pizza(prefTop, prefSize, prefSide);
-                        prefOrder.listOfPizzas.Add(p1);
+                        prefOrder.ListOfPizzas.Add(p1);
                         i++;
-                        //
-                        if (i == n)
+                        if (i==n)
                             totalOrderPrice = prefOrder.OrderPrice();
                     }
-                    // serialize JSON directly to a file
+                    //--Serialize JSON directly to a file
                     JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto };
                     string json = JsonConvert.SerializeObject(prefOrder, settings);
                     File.AppendAllText(ordersPath, json + Environment.NewLine);
-                    //Customer order finished
+                    //--Customer order finished
                     Console.WriteLine("Your order has been completed!");
                     System.Console.WriteLine("The total order price is {0}", totalOrderPrice);
-                    //End of loop
+                    //--End of loop
                     currCustomer = false;
                 }
             }
-
             static PizzaModel DeserializeFile(string fileName)
             {
                 string jsonString = File.ReadAllText(fileName);
-                //--Deserialize the jsonString to print it on the console
                 var pizzaMenu = JsonConvert.DeserializeObject<PizzaModel>(jsonString);
                 return pizzaMenu;
             }
-
             static void ConsoleFn(PizzaModel pizzaMenu, ref typeXPrice prefTop, ref typeXPrice prefSize, ref typeXPrice prefSide)
             {
                 //--Table formatting
                 string formatTitle = "[bold green]Available toppings[/] \n";
                 List<String> columnNames = new List<string> { "Toppings", "Prices" };
                 Menu.PrintMenu(formatTitle, columnNames, pizzaMenu.Toppings);
-                //
                 AnsiConsole.Render(new Markup("[bold yellow] Your preferred topping from the topping list:[/] \n"));
                 //--Customer's Toppings
                 prefTop = Menu.InputCheck(pizzaMenu.Toppings, "topping");
@@ -91,7 +84,6 @@ namespace PizzaApp
                 columnNames.Add("Sizes");
                 columnNames.Add("Prices");
                 Menu.PrintMenu(formatTitle, columnNames, pizzaMenu.Sizes);
-                //
                 AnsiConsole.Render(new Markup("[bold yellow]Your preferred pizza size from the sizes list:[/]\n"));
                 //--Customer's Chosen Size
                 prefSize = Menu.InputCheck(pizzaMenu.Sizes);
@@ -101,7 +93,6 @@ namespace PizzaApp
                 columnNames.Add("Sides");
                 columnNames.Add("Prices");
                 Menu.PrintMenu(formatTitle, columnNames, pizzaMenu.Sides);
-                //
                 AnsiConsole.Render(new Markup("[bold yellow]Your preferred side from the sides list:[/]\n"));
                 //--Customer's Chosen Sides
                 prefSide = Menu.InputCheck(pizzaMenu.Sides, "side");

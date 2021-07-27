@@ -1,1 +1,1 @@
-{"userId":1,"NumOfPizzas":0}
+{"NumOfPizzas":2,"UserId":1,"ListOfPizzas":[{"Topping":{"type":"Meat","price":17.5},"Size":{"type":"Small","price":10.0},"Side":{"type":"Salad","price":9.8}},{"Topping":{"type":"Shrimps","price":30.0},"Size":{"type":"Large","price":20.0},"Side":{"type":"Cookie","price":3.5}}]}
