@@ -1,9 +1,10 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using Spectre.Console;
 using System.Text.Json;
+
 namespace PizzaApp
 {
     class Program
