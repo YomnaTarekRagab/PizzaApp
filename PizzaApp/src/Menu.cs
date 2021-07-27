@@ -4,7 +4,7 @@ using Spectre.Console;
 namespace PizzaApp
 {
     public class Menu{
-        public static void PrintMenu(string formatTitle, List<string> columnNames, List<typeXPrice> items){
+        public static void PrintMenu(string formatTitle, List<string> columnNames, List<TypeXPrice> items){
             //--Title
             AnsiConsole.Render(new Markup(formatTitle));
             var table = new Table();
@@ -13,18 +13,19 @@ namespace PizzaApp
                 table.AddColumn(new TableColumn(columnName).Centered());
             //--Rows
             foreach (var item in items)
-                    table.AddRow(new Markup($"[bold Red]{item.type}[/]"), new Markup($"[bold Red] ${item.price}[/]"));
+                    table.AddRow(new Markup($"[bold Red]{item.Type}[/]"), new Markup($"[bold Red] ${item.Price}[/]"));
             AnsiConsole.Render(table);
         }
-        public static typeXPrice InputCheck (List<typeXPrice> inputArray, string type=""){
+        
+        public static TypeXPrice InputCheck (List<TypeXPrice> inputArray, string type=""){
             bool check = false;
             string chosen = "";
-            typeXPrice chosenItem = null;
+            TypeXPrice chosenItem = null;
             while(!check){
                 chosen=Console.ReadLine();
                 foreach (var item in inputArray) {
                     //--Toppings,Size And Sides Check
-                    string myType = (string)(object) item.type;
+                    string myType = (string)(object) item.Type;
                     if(string.Equals(chosen, myType, StringComparison.OrdinalIgnoreCase)){
                         chosenItem=item;
                         if(type=="topping")

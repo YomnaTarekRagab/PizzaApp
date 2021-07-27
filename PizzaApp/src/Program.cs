@@ -3,7 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using Spectre.Console;
-
+using System.Text.Json;
 namespace PizzaApp
 {
     class Program
@@ -35,7 +35,6 @@ namespace PizzaApp
                     PizzaModel pizzaMenu = DeserializeFile(fileName);
                     int i = 0;
                     float totalOrderPrice = 0f;
-
                     Order prefOrder = new Order();
                     //--Setting num of pizzas
                     prefOrder.NumOfPizzas = n;
@@ -43,7 +42,7 @@ namespace PizzaApp
                     while (i<n)
                     {
                         AnsiConsole.Render(new Markup($"[bold red]This is order number {i} from your {n} orders:[/] \n"));
-                        typeXPrice prefTop = null, prefSize = null, prefSide = null;
+                        TypeXPrice prefTop = null, prefSize = null, prefSide = null;
                         ConsoleFn(pizzaMenu, ref prefTop, ref prefSize, ref prefSide);
                         //--Create a pizza Object
                         Pizza p1 = new Pizza(prefTop, prefSize, prefSide);
@@ -54,7 +53,8 @@ namespace PizzaApp
                     }
                     //--Serialize JSON directly to a file
                     JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto };
-                    string json = JsonConvert.SerializeObject(prefOrder, settings);
+                    var options = new JsonSerializerOptions { WriteIndented = true };
+                    var json = System.Text.Json.JsonSerializer.Serialize(prefOrder, options);
                     File.AppendAllText(ordersPath, json + Environment.NewLine);
                     //--Customer order finished
                     Console.WriteLine("Your order has been completed!");
@@ -63,13 +63,15 @@ namespace PizzaApp
                     currCustomer = false;
                 }
             }
+            
             static PizzaModel DeserializeFile(string fileName)
             {
                 string jsonString = File.ReadAllText(fileName);
                 var pizzaMenu = JsonConvert.DeserializeObject<PizzaModel>(jsonString);
                 return pizzaMenu;
             }
-            static void ConsoleFn(PizzaModel pizzaMenu, ref typeXPrice prefTop, ref typeXPrice prefSize, ref typeXPrice prefSide)
+            
+            static void ConsoleFn(PizzaModel pizzaMenu, ref TypeXPrice prefTop, ref TypeXPrice prefSize, ref TypeXPrice prefSide)
             {
                 //--Table formatting
                 string formatTitle = "[bold green]Available toppings[/] \n";

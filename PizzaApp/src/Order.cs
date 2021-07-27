@@ -1,18 +1,19 @@
 using System.Collections.Generic;
 namespace PizzaApp{
     public class Order{
-    
-        public const float TAXES = 15.0f;
-        private static int currentId = 1;
-        private float totalPrice;
+        public const float Taxes = 15.0f;
+        private static int CurrentId = 1;
+        private float TotalPrice;
         public int NumOfPizzas {get; set;}
         public int UserId {get;set;}
         public List<Pizza> ListOfPizzas {get;set;}
+        
         public Order(){
-            UserId = currentId;
-            currentId++;
+            UserId = CurrentId;
+            CurrentId++;
             ListOfPizzas = new List<Pizza> (NumOfPizzas);
         }
+
         public bool AddPizza(Pizza tobeAddedPizza){
             try{
                 ListOfPizzas.Add(tobeAddedPizza);
@@ -22,12 +23,13 @@ namespace PizzaApp{
                 return false;
             }
         }
+        
         public float OrderPrice(){
             foreach(Pizza item in ListOfPizzas){
-                totalPrice+= item.CalculatePrice();
+                TotalPrice+= item.CalculatePrice();
             }
-            totalPrice+= TAXES;
-            return this.totalPrice;
+            TotalPrice+= Taxes;
+            return this.TotalPrice;
         }
     }
 }

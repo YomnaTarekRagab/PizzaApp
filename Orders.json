@@ -1,0 +1,34 @@
+{
+  "NumOfPizzas": 2,
+  "UserId": 1,
+  "ListOfPizzas": [
+    {
+      "Topping": {
+        "Type": "Meat",
+        "Price": 17.5
+      },
+      "Size": {
+        "Type": "Small",
+        "Price": 10
+      },
+      "Side": {
+        "Type": "Cookie",
+        "Price": 3.5
+      }
+    },
+    {
+      "Topping": {
+        "Type": "Shrimps",
+        "Price": 30
+      },
+      "Size": {
+        "Type": "Medium",
+        "Price": 15
+      },
+      "Side": {
+        "Type": "Fries",
+        "Price": 5.5
+      }
+    }
+  ]
+}
