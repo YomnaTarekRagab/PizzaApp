@@ -8,7 +8,7 @@ namespace PizzaApp
 {
     class Program
     {
-          static void Main(string[] args)
+        static void Main(string[] args)
         {
             //--Begin
             AnsiConsole.Render(
@@ -39,7 +39,7 @@ namespace PizzaApp
                     //--Setting num of pizzas
                     prefOrder.NumOfPizzas = n;
                     prefOrder.ListOfPizzas = new List<Pizza>();
-                    while (i<n)
+                    while (i < n)
                     {
                         AnsiConsole.Render(new Markup($"[bold red]This is order number {i} from your {n} orders:[/] \n"));
                         TypeXPrice prefTop = null, prefSize = null, prefSide = null;
@@ -48,11 +48,10 @@ namespace PizzaApp
                         Pizza p1 = new Pizza(prefTop, prefSize, prefSide);
                         prefOrder.ListOfPizzas.Add(p1);
                         i++;
-                        if (i==n)
+                        if (i == n)
                             totalOrderPrice = prefOrder.OrderPrice();
                     }
                     //--Serialize JSON directly to a file
-                    JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto };
                     var options = new JsonSerializerOptions { WriteIndented = true };
                     var json = System.Text.Json.JsonSerializer.Serialize(prefOrder, options);
                     File.AppendAllText(ordersPath, json + Environment.NewLine);
@@ -63,14 +62,14 @@ namespace PizzaApp
                     currCustomer = false;
                 }
             }
-            
+
             static PizzaModel DeserializeFile(string fileName)
             {
                 string jsonString = File.ReadAllText(fileName);
                 var pizzaMenu = JsonConvert.DeserializeObject<PizzaModel>(jsonString);
                 return pizzaMenu;
             }
-            
+
             static void ConsoleFn(PizzaModel pizzaMenu, ref TypeXPrice prefTop, ref TypeXPrice prefSize, ref TypeXPrice prefSide)
             {
                 //--Table formatting

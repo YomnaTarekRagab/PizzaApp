@@ -4,8 +4,8 @@
   "ListOfPizzas": [
     {
       "Topping": {
-        "Type": "Meat",
-        "Price": 17.5
+        "Type": "Shrimps",
+        "Price": 30
       },
       "Size": {
         "Type": "Small",
@@ -18,16 +18,16 @@
     },
     {
       "Topping": {
-        "Type": "Shrimps",
-        "Price": 30
+        "Type": "Meat",
+        "Price": 17.5
       },
       "Size": {
-        "Type": "Medium",
-        "Price": 15
+        "Type": "Large",
+        "Price": 20
       },
       "Side": {
-        "Type": "Fries",
-        "Price": 5.5
+        "Type": "None",
+        "Price": 0
       }
     }
   ]
