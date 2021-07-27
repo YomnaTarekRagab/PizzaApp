@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+
 namespace PizzaApp
 {
     public class Pizza
@@ -21,7 +22,5 @@ namespace PizzaApp
                 this.Price += this.Topping.Price + this.Size.Price + this.Side.Price;
             return this.Price;
         }
-
     }
-
 }
