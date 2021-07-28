@@ -5,19 +5,17 @@ namespace PizzaApp
     public class Order
     {
         public const float Taxes = 15.0f;
-        private static int CurrentId = 1;
+        private static int currentId = 1;
         private float TotalPrice;
         public int NumOfPizzas { get; set; }
-        public int UserId { get; set; }
+        public int UserId 
+        { 
+            get
+            {
+                return currentId++;
+            }
+         }
         public List<Pizza> ListOfPizzas { get; set; }
-
-        public Order()
-        {
-            UserId = CurrentId;
-            CurrentId++;
-            ListOfPizzas = new List<Pizza>(NumOfPizzas);
-        }
-
         public bool AddPizza(Pizza tobeAddedPizza)
         {
             try

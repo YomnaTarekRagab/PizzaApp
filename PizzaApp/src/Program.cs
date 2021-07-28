@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Collections.Generic;
 using Newtonsoft.Json;
@@ -36,18 +36,23 @@ namespace PizzaApp
                     PizzaModel pizzaMenu = DeserializeFile(fileName);
                     int i = 0;
                     float totalOrderPrice = 0f;
-                    Order prefOrder = new Order();
-                    //--Setting num of pizzas
-                    prefOrder.NumOfPizzas = n;
-                    prefOrder.ListOfPizzas = new List<Pizza>();
+                    var prefOrder = new Order
+                    {
+                        NumOfPizzas=n,
+                        ListOfPizzas = new List<Pizza>(n)
+                    };
                     while (i < n)
                     {
                         AnsiConsole.Render(new Markup($"[bold red]This is order number {i} from your {n} orders:[/] \n"));
                         TypeXPrice prefTop = null, prefSize = null, prefSide = null;
                         ConsoleFn(pizzaMenu, ref prefTop, ref prefSize, ref prefSide);
-                        //--Create a pizza Object
-                        Pizza p1 = new Pizza(prefTop, prefSize, prefSide);
-                        prefOrder.ListOfPizzas.Add(p1);
+                        var pizza = new Pizza 
+                        {
+                            Topping = prefTop,
+                            Size = prefSize,
+                            Side = prefSide
+                        };
+                        prefOrder.ListOfPizzas.Add(pizza);
                         i++;
                         if (i == n)
                             totalOrderPrice = prefOrder.OrderPrice();
@@ -56,10 +61,9 @@ namespace PizzaApp
                     var options = new JsonSerializerOptions { WriteIndented = true };
                     var json = System.Text.Json.JsonSerializer.Serialize(prefOrder, options);
                     File.AppendAllText(ordersPath, json + Environment.NewLine);
-                    //--Customer order finished
+                    //--End of loop
                     Console.WriteLine("Your order has been completed!");
                     System.Console.WriteLine("The total order price is {0}", totalOrderPrice);
-                    //--End of loop
                     currCustomer = false;
                 }
             }
@@ -73,30 +77,24 @@ namespace PizzaApp
 
             static void ConsoleFn(PizzaModel pizzaMenu, ref TypeXPrice prefTop, ref TypeXPrice prefSize, ref TypeXPrice prefSide)
             {
-                //--Table formatting
                 string formatTitle = "[bold green]Available toppings[/] \n";
                 List<String> columnNames = new List<string> { "Toppings", "Prices" };
                 Menu.PrintMenu(formatTitle, columnNames, pizzaMenu.Toppings);
                 AnsiConsole.Render(new Markup("[bold yellow] Your preferred topping from the topping list:[/] \n"));
-                //--Customer's Toppings
                 prefTop = Menu.InputCheck(pizzaMenu.Toppings, "topping");
-                //--Table formatting
                 formatTitle = "[bold green]Available sizes[/] \n";
                 columnNames.Clear();
                 columnNames.Add("Sizes");
                 columnNames.Add("Prices");
                 Menu.PrintMenu(formatTitle, columnNames, pizzaMenu.Sizes);
                 AnsiConsole.Render(new Markup("[bold yellow]Your preferred pizza size from the sizes list:[/]\n"));
-                //--Customer's Chosen Size
                 prefSize = Menu.InputCheck(pizzaMenu.Sizes);
-                //--Table formatting
                 formatTitle = "[bold green]Available sides[/] \n";
                 columnNames.Clear();
                 columnNames.Add("Sides");
                 columnNames.Add("Prices");
                 Menu.PrintMenu(formatTitle, columnNames, pizzaMenu.Sides);
                 AnsiConsole.Render(new Markup("[bold yellow]Your preferred side from the sides list:[/]\n"));
-                //--Customer's Chosen Sides
                 prefSide = Menu.InputCheck(pizzaMenu.Sides, "side");
             }
         }

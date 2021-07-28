@@ -1,1 +1,20 @@
-{"NumOfPizzas":2,"UserId":1,"ListOfPizzas":[{"Topping":{"type":"Meat","price":17.5},"Size":{"type":"Small","price":10.0},"Side":{"type":"Salad","price":9.8}},{"Topping":{"type":"Shrimps","price":30.0},"Size":{"type":"Large","price":20.0},"Side":{"type":"Cookie","price":3.5}}]}
+{
+  "NumOfPizzas": 1,
+  "UserId": 1,
+  "ListOfPizzas": [
+    {
+      "Topping": {
+        "Type": "Meat",
+        "Price": 17.5
+      },
+      "Size": {
+        "Type": "Small",
+        "Price": 10
+      },
+      "Side": {
+        "Type": "Fries",
+        "Price": 5.5
+      }
+    }
+  ]
+}

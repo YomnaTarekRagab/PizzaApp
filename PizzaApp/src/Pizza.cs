@@ -8,14 +8,6 @@ namespace PizzaApp
         public TypeXPrice Topping { get; set; }
         public TypeXPrice Size { get; set; }
         public TypeXPrice Side { get; set; }
-
-        public Pizza(TypeXPrice top, TypeXPrice size, TypeXPrice side)
-        {
-            this.Topping = top;
-            this.Size = size;
-            this.Side = side;
-        }
-
         public float CalculatePrice()
         {
             if (this.Price == 0)
